@@ -14,9 +14,9 @@ spec:
         name: fw-check
     spec:
 ###Use node.Selector if matching labels for a specific node pool, else use nodeName: "" if all Nodel Pools should be covered
-      nodeSelector:
-        lke.linode.com/pool-id: "172540"
-#     nodeName: ""   
+#     nodeSelector:
+#       lke.linode.com/pool-id: "172540"
+      nodeName: ""   
       containers:
       - image: eilerb101/fw-init
         imagePullPolicy: Always
