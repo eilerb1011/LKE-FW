@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fw-check
+  labels: 
+    k8s-app: fw-check
+spec:
+  selector:
+    matchLabels: 
+      name: fw-check
+  template:
+    metadata:
+      labels:
+        name: fw-check
+    spec:
+###Use node.Selector if matching labels for a specific node pool, else use nodeName: "" if all Nodel Pools should be covered
+      nodeSelector:
+        lke.linode.com/pool-id: "172540"
+#     nodeName: ""   
+      containers:
+      - image: eilerb101/fw-init
+        imagePullPolicy: Always
+        stdin: true
+        tty: true
+        name: "fw-check"
+        env:
+        - name: LINODE_CLI_TOKEN
+          valueFrom:
+           secretKeyRef:
+            name: fw-token
+            key: token
+        - name: LINODE_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName 
+#fw_id is the UID if the LinodeFW - found in the API, TF output or in the UI
+        - name: fw_id
+          value: '183073'
+#interval is the number of seconds to wait in between verifying node has firewall attached
+        - name: interval
+          value: '300'
+      restartPolicy: Always
