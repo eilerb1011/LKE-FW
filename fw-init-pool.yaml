@@ -18,7 +18,7 @@ spec:
 #       lke.linode.com/pool-id: "172540"
       nodeName: ""   
       containers:
-      - image: eilerb101/fw-init
+      - image: eilerb101/fw-init2
         imagePullPolicy: Always
         stdin: true
         tty: true
@@ -35,7 +35,7 @@ spec:
               fieldPath: spec.nodeName 
 #fw_id is the UID if the LinodeFW - found in the API, TF output or in the UI
         - name: fw_id
-          value: '183073'
+          value: '[firewall id]'
 #interval is the number of seconds to wait in between verifying node has firewall attached
         - name: interval
           value: '300'
